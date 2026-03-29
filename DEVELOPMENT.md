@@ -214,6 +214,7 @@ Three agents work independently, one per game. Each agent follows strict TDD: wr
 **Scope:** `src/games/pong/`
 
 **Files to implement:**
+
 - `state.ts` - already scaffolded with types and `createInitialState`
 - `logic.ts` - all pure game logic
 - `logic.test.ts` - all tests for logic
@@ -221,6 +222,7 @@ Three agents work independently, one per game. Each agent follows strict TDD: wr
 - `index.ts` - wire keyboard input, game loop, rendering
 
 **Game mechanics:**
+
 - Two paddles: player (left side, column 1) and CPU (right side, last column - 1)
 - Ball bounces around the play area
 - Up/Down arrows move the player paddle
@@ -234,6 +236,7 @@ Three agents work independently, one per game. Each agent follows strict TDD: wr
 - Winner displayed on game over screen
 
 **Test cases to write:**
+
 1. Player paddle moves up when direction is up
 2. Player paddle moves down when direction is down
 3. Player paddle does not move past top wall
@@ -255,6 +258,7 @@ Three agents work independently, one per game. Each agent follows strict TDD: wr
 19. Game over freezes state
 
 **Rendering approach:**
+
 - FrameBuffer sized to terminal
 - Paddles drawn as vertical bars of `|` characters
 - Ball drawn as `O`
@@ -263,6 +267,7 @@ Three agents work independently, one per game. Each agent follows strict TDD: wr
 - "YOU WIN" / "YOU LOSE" + "Press R to restart" overlay on game over
 
 **Controls:**
+
 - Up arrow: move paddle up
 - Down arrow: move paddle down
 - R: restart after game over
@@ -275,6 +280,7 @@ Three agents work independently, one per game. Each agent follows strict TDD: wr
 **Scope:** `src/games/tetris/`
 
 **Files to implement:**
+
 - `state.ts` - already scaffolded with types, `createInitialState`, piece shapes, and rotation data
 - `logic.ts` - all pure game logic
 - `logic.test.ts` - all tests for logic
@@ -282,6 +288,7 @@ Three agents work independently, one per game. Each agent follows strict TDD: wr
 - `index.ts` - wire keyboard input, game loop, rendering
 
 **Game mechanics:**
+
 - 10-wide, 20-tall board (configurable in state)
 - 7 piece types: I, O, T, S, Z, L, J - shapes defined in `state.ts` `PIECE_SHAPES`
 - Pieces spawn at top center, fall down one row every `ticksPerDrop` ticks
@@ -300,6 +307,7 @@ Three agents work independently, one per game. Each agent follows strict TDD: wr
 - Use `state.ts` `getPieceCells` and `createPiece` helpers for piece management
 
 **Test cases to write:**
+
 1. Piece moves left when action is left
 2. Piece moves right when action is right
 3. Piece does not move past left wall
@@ -325,6 +333,7 @@ Three agents work independently, one per game. Each agent follows strict TDD: wr
 23. Piece auto-drops after ticksPerDrop ticks with no input
 
 **Rendering approach:**
+
 - FrameBuffer with board centered on screen
 - Board drawn with border around it
 - Each piece type gets a unique color (I=cyan, O=yellow, T=purple, S=green, Z=red, L=orange, J=blue)
@@ -335,6 +344,7 @@ Three agents work independently, one per game. Each agent follows strict TDD: wr
 - "GAME OVER - press R to restart" overlay on death
 
 **Controls:**
+
 - Left/Right arrows: move piece
 - Up arrow: rotate
 - Down arrow: soft drop

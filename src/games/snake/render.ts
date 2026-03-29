@@ -9,6 +9,8 @@ import {
 import { COLORS } from '../../shared/colors.js'
 import type { SnakeState } from './state.js'
 
+export const SNAKE_CELL_WIDTH = 2
+
 const BACKGROUND = parseColor(COLORS.background)
 const BORDER = parseColor(COLORS.border)
 const HEAD = parseColor(COLORS.primary)
@@ -44,7 +46,7 @@ export function createSnakeRenderer(args: {
 
   const board = new FrameBufferRenderable(renderer, {
     id: 'snake-board',
-    width: state.gameArea.width + 2,
+    width: state.gameArea.width * SNAKE_CELL_WIDTH + 2,
     height: state.gameArea.height + 2,
   })
 
@@ -60,7 +62,7 @@ export function createSnakeRenderer(args: {
 
   function drawBorder(args: { state: SnakeState }) {
     const { state } = args
-    const boardWidth = state.gameArea.width + 2
+    const boardWidth = state.gameArea.width * SNAKE_CELL_WIDTH + 2
     const boardHeight = state.gameArea.height + 2
 
     board.frameBuffer.drawText('+', 0, 0, BORDER, BACKGROUND)
@@ -92,18 +94,25 @@ export function createSnakeRenderer(args: {
     color: typeof HEAD
   }) {
     const { x, y, char, color } = args
-    board.frameBuffer.drawText(char, x + 1, y + 1, color, BACKGROUND)
+    board.frameBuffer.drawText(
+      char.repeat(SNAKE_CELL_WIDTH),
+      x * SNAKE_CELL_WIDTH + 1,
+      y + 1,
+      color,
+      BACKGROUND
+    )
   }
 
   function drawOverlay(args: { state: SnakeState }) {
     const { state } = args
     const message = 'GAME OVER. PRESS R TO RESTART.'
-    const visibleMessage = message.slice(0, state.gameArea.width)
+    const boardInnerWidth = state.gameArea.width * SNAKE_CELL_WIDTH
+    const visibleMessage = message.slice(0, boardInnerWidth)
     const messageX =
       1 +
       Math.max(
         0,
-        Math.floor((state.gameArea.width - visibleMessage.length) / 2)
+        Math.floor((boardInnerWidth - visibleMessage.length) / 2)
       )
     const messageY = 1 + Math.floor(state.gameArea.height / 2)
 

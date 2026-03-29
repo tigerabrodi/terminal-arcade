@@ -18,6 +18,7 @@ export interface PongState {
   ball: Ball
   playerScore: number
   cpuScore: number
+  winner: 'player' | 'cpu' | null
   isGameOver: boolean
   gameArea: Dimensions
   paddleSpeed: number
@@ -50,10 +51,11 @@ export function createInitialState(args: { gameArea: Dimensions }): PongState {
     },
     playerScore: 0,
     cpuScore: 0,
+    winner: null,
     isGameOver: false,
     gameArea,
-    paddleSpeed: 1,
-    ballSpeed: 1,
+    paddleSpeed: 2,
+    ballSpeed: 1.5,
     maxScore: 5,
   }
 }

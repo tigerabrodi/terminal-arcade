@@ -24,6 +24,7 @@ export function createMenu(args: {
     width: '100%',
     height: '100%',
     backgroundColor: COLORS.background,
+    gap: 1,
   })
 
   const title = new ASCIIFontRenderable(renderer, {

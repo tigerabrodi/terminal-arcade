@@ -419,7 +419,7 @@ describe('snake logic collisions and speed', () => {
     })
 
     expect(nextState.score).toBe(5)
-    expect(nextState.tickInterval).toBe(90)
+    expect(nextState.tickInterval).toBe(60)
   })
 
   test('game over freezes the snake on later ticks', () => {
@@ -471,7 +471,7 @@ describe('snake logic collisions and speed', () => {
       gameArea: { width: 12, height: 12 },
     })
 
-    expect(state.tickInterval).toBe(100)
+    expect(state.tickInterval).toBe(70)
   })
 
   test('eating the final free cell ends the run when no new food cell remains', () => {

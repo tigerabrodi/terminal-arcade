@@ -1,6 +1,6 @@
 import type { CliRenderer, KeyEvent } from '@opentui/core'
 import { tick } from './logic.js'
-import { createSnakeRenderer } from './render.js'
+import { createSnakeRenderer, SNAKE_CELL_WIDTH } from './render.js'
 import { createInitialState, type Direction } from './state.js'
 
 function getDirectionFromKey(args: { name: string }): Direction | null {
@@ -31,7 +31,7 @@ function createGameArea(args: { renderer: CliRenderer }): {
   const { renderer } = args
 
   return {
-    width: Math.max(4, renderer.width - 8),
+    width: Math.max(4, Math.floor((renderer.width - 10) / SNAKE_CELL_WIDTH)),
     height: Math.max(4, renderer.height - 8),
   }
 }

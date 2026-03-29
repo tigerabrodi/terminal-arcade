@@ -3,7 +3,7 @@ import type { Position, Dimensions } from '../../shared/types.js'
 export type Direction = 'up' | 'down' | 'left' | 'right'
 
 export const INITIAL_SNAKE_LENGTH = 5
-export const INITIAL_TICK_INTERVAL = 100
+export const INITIAL_TICK_INTERVAL = 70
 
 export interface SnakeState {
   snake: Array<Position>
