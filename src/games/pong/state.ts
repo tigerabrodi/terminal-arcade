@@ -54,8 +54,8 @@ export function createInitialState(args: { gameArea: Dimensions }): PongState {
     winner: null,
     isGameOver: false,
     gameArea,
-    paddleSpeed: 2,
-    ballSpeed: 1.5,
+    paddleSpeed: 5,
+    ballSpeed: 3.5,
     maxScore: 5,
   }
 }

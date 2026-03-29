@@ -60,8 +60,8 @@ describe('pong state defaults', () => {
       gameArea: { width: 20, height: 12 },
     })
 
-    expect(state.paddleSpeed).toBe(2)
-    expect(state.ballSpeed).toBe(1.5)
+    expect(state.paddleSpeed).toBe(5)
+    expect(state.ballSpeed).toBe(3.5)
   })
 })
 
