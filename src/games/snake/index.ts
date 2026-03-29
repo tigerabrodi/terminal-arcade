@@ -1,6 +1,7 @@
 import type { CliRenderer, KeyEvent } from '@opentui/core'
 import { tick } from './logic.js'
 import { createSnakeRenderer, SNAKE_CELL_WIDTH } from './render.js'
+import { playCollectSound } from '../../shared/sound.js'
 import { createInitialState, type Direction } from './state.js'
 
 function getDirectionFromKey(args: { name: string }): Direction | null {
@@ -72,11 +73,15 @@ export function createGame(args: {
         return
       }
 
+      const previousScore = state.score
       state = tick({
         state,
         input: { direction: pendingDirection },
         random: Math.random(),
       })
+      if (state.score > previousScore) {
+        playCollectSound()
+      }
       pendingDirection = null
       render({ state })
       scheduleNextTick()
