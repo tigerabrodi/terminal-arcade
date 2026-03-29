@@ -85,6 +85,24 @@ async function main() {
         currentCleanup = cleanup
         break
       }
+      case 'pong': {
+        const { createGame } = await import('./games/pong/index.js')
+        const { cleanup } = createGame({
+          renderer,
+          onExit: () => showMenu(),
+        })
+        currentCleanup = cleanup
+        break
+      }
+      case 'tetris': {
+        const { createGame } = await import('./games/tetris/index.js')
+        const { cleanup } = createGame({
+          renderer,
+          onExit: () => showMenu(),
+        })
+        currentCleanup = cleanup
+        break
+      }
     }
   }
 

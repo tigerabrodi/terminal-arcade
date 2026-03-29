@@ -209,6 +209,141 @@ Three agents work independently, one per game. Each agent follows strict TDD: wr
 
 ---
 
+### Agent D: Pong
+
+**Scope:** `src/games/pong/`
+
+**Files to implement:**
+- `state.ts` - already scaffolded with types and `createInitialState`
+- `logic.ts` - all pure game logic
+- `logic.test.ts` - all tests for logic
+- `render.ts` - draw PongState to FrameBuffer
+- `index.ts` - wire keyboard input, game loop, rendering
+
+**Game mechanics:**
+- Two paddles: player (left side, column 1) and CPU (right side, last column - 1)
+- Ball bounces around the play area
+- Up/Down arrows move the player paddle
+- CPU paddle tracks the ball's y position with limited speed (beatable AI)
+- Ball has `velocityX` and `velocityY`, moves each tick
+- Ball bounces off top and bottom walls (invert `velocityY`)
+- Ball bounces off paddles (invert `velocityX`, adjust `velocityY` based on where it hits the paddle)
+- Ball passing left edge = CPU scores. Ball passing right edge = player scores.
+- After a score, ball resets to center heading toward the scorer
+- Game over when either player reaches `maxScore` (5)
+- Winner displayed on game over screen
+
+**Test cases to write:**
+1. Player paddle moves up when direction is up
+2. Player paddle moves down when direction is down
+3. Player paddle does not move past top wall
+4. Player paddle does not move past bottom wall
+5. CPU paddle moves toward ball y position
+6. CPU paddle does not exceed its max speed
+7. CPU paddle does not move past walls
+8. Ball moves by velocity each tick
+9. Ball bounces off top wall (velocityY inverts)
+10. Ball bounces off bottom wall (velocityY inverts)
+11. Ball bounces off player paddle (velocityX inverts)
+12. Ball bounces off CPU paddle (velocityX inverts)
+13. Ball angle changes based on paddle hit location
+14. Ball passing left edge increments CPU score
+15. Ball passing right edge increments player score
+16. Ball resets to center after score
+17. Game over when player reaches maxScore
+18. Game over when CPU reaches maxScore
+19. Game over freezes state
+
+**Rendering approach:**
+- FrameBuffer sized to terminal
+- Paddles drawn as vertical bars of `|` characters
+- Ball drawn as `O`
+- Dashed center line
+- Score for both players displayed at top
+- "YOU WIN" / "YOU LOSE" + "Press R to restart" overlay on game over
+
+**Controls:**
+- Up arrow: move paddle up
+- Down arrow: move paddle down
+- R: restart after game over
+- ESC: back to menu (handled by parent)
+
+---
+
+### Agent E: Tetris
+
+**Scope:** `src/games/tetris/`
+
+**Files to implement:**
+- `state.ts` - already scaffolded with types, `createInitialState`, piece shapes, and rotation data
+- `logic.ts` - all pure game logic
+- `logic.test.ts` - all tests for logic
+- `render.ts` - draw TetrisState to FrameBuffer
+- `index.ts` - wire keyboard input, game loop, rendering
+
+**Game mechanics:**
+- 10-wide, 20-tall board (configurable in state)
+- 7 piece types: I, O, T, S, Z, L, J - shapes defined in `state.ts` `PIECE_SHAPES`
+- Pieces spawn at top center, fall down one row every `ticksPerDrop` ticks
+- Left/Right arrows move piece horizontally
+- Up arrow rotates piece clockwise
+- Down arrow soft drops (moves down faster)
+- Space hard drops (instantly drops to lowest valid position and locks)
+- Piece locks when it can't move down - becomes part of the board
+- After locking, check for full rows and clear them
+- Scoring: 1 line = 100, 2 lines = 300, 3 lines = 500, 4 lines = 800 (multiplied by level)
+- Level increases every 10 lines cleared
+- `ticksPerDrop` decreases with level (pieces fall faster)
+- New piece spawns from `nextPiece`, a new `nextPiece` is randomly chosen
+- Game over when a new piece spawns overlapping existing locked cells
+- `isValidPosition` checks piece cells against board bounds and locked cells
+- Use `state.ts` `getPieceCells` and `createPiece` helpers for piece management
+
+**Test cases to write:**
+1. Piece moves left when action is left
+2. Piece moves right when action is right
+3. Piece does not move past left wall
+4. Piece does not move past right wall
+5. Piece does not move into locked cells
+6. Piece moves down on soft drop (action down)
+7. Hard drop places piece at lowest valid row
+8. Piece locks after hard drop
+9. Piece rotates clockwise
+10. Piece does not rotate into wall
+11. Piece does not rotate into locked cells
+12. O piece has only one rotation
+13. Full row is cleared from board
+14. Multiple rows cleared simultaneously
+15. Rows above cleared lines shift down
+16. Score calculated correctly: 1/2/3/4 lines
+17. Score multiplied by level
+18. Level increases every 10 lines
+19. ticksPerDrop decreases with level
+20. New piece spawns after locking with correct kind from nextPiece
+21. Game over when new piece overlaps locked cells
+22. Game over freezes state (no more movement)
+23. Piece auto-drops after ticksPerDrop ticks with no input
+
+**Rendering approach:**
+- FrameBuffer with board centered on screen
+- Board drawn with border around it
+- Each piece type gets a unique color (I=cyan, O=yellow, T=purple, S=green, Z=red, L=orange, J=blue)
+- Locked cells keep their piece color
+- Current piece drawn at its position
+- Next piece preview shown to the right of the board
+- Score and level displayed above the board
+- "GAME OVER - press R to restart" overlay on death
+
+**Controls:**
+- Left/Right arrows: move piece
+- Up arrow: rotate
+- Down arrow: soft drop
+- Space: hard drop
+- R: restart after game over
+- ESC: back to menu (handled by parent)
+
+---
+
 ## Phase 3: Integration
 
 - Verify menu -> game -> ESC -> menu flow works

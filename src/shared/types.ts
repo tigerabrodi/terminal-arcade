@@ -1,4 +1,4 @@
-export type GameId = 'snake' | 'flappy-bird' | 'dino'
+export type GameId = 'snake' | 'flappy-bird' | 'dino' | 'pong' | 'tetris'
 
 export type AppScreen = { kind: 'menu' } | { kind: 'playing'; gameId: GameId }
 
@@ -23,6 +23,16 @@ export const GAME_OPTIONS: Array<GameOption> = [
     id: 'snake',
     name: 'Snake',
     description: 'Eat food and grow without hitting yourself',
+  },
+  {
+    id: 'pong',
+    name: 'Pong',
+    description: 'Classic paddle ball against the CPU',
+  },
+  {
+    id: 'tetris',
+    name: 'Tetris',
+    description: 'Stack and clear falling blocks',
   },
 ]
 
