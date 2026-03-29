@@ -109,11 +109,7 @@ export function createSnakeRenderer(args: {
     const boardInnerWidth = state.gameArea.width * SNAKE_CELL_WIDTH
     const visibleMessage = message.slice(0, boardInnerWidth)
     const messageX =
-      1 +
-      Math.max(
-        0,
-        Math.floor((boardInnerWidth - visibleMessage.length) / 2)
-      )
+      1 + Math.max(0, Math.floor((boardInnerWidth - visibleMessage.length) / 2))
     const messageY = 1 + Math.floor(state.gameArea.height / 2)
 
     board.frameBuffer.drawText(

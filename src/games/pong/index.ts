@@ -11,6 +11,7 @@ import { createInitialState, type PongInput } from './state.js'
 
 const PLAYFIELD_OFFSET_Y = 2
 const TICK_INTERVAL_MS = 33
+const PLAYER_INPUT_LATCH_TICKS = 4
 
 function createGameArea(args: { renderer: CliRenderer }): {
   width: number
@@ -32,6 +33,7 @@ export function createGame(_args: {
   const gameArea = createGameArea({ renderer })
   let state = createInitialState({ gameArea })
   let pendingDirection: PongInput['direction'] = null
+  let pendingDirectionTicks = 0
   let isCleanedUp = false
 
   const container = new BoxRenderable(renderer, {
@@ -59,7 +61,15 @@ export function createGame(_args: {
   function restartGame() {
     state = createInitialState({ gameArea })
     pendingDirection = null
+    pendingDirectionTicks = 0
     renderCurrentState()
+  }
+
+  function queueDirection(args: { direction: PongInput['direction'] }) {
+    const { direction } = args
+
+    pendingDirection = direction
+    pendingDirectionTicks = direction === null ? 0 : PLAYER_INPUT_LATCH_TICKS
   }
 
   function handleKeypress(key: KeyEvent) {
@@ -77,12 +87,16 @@ export function createGame(_args: {
     }
 
     if (key.name === 'up') {
-      pendingDirection = 'up'
+      queueDirection({
+        direction: 'up',
+      })
       return
     }
 
     if (key.name === 'down') {
-      pendingDirection = 'down'
+      queueDirection({
+        direction: 'down',
+      })
     }
   }
 
@@ -91,13 +105,23 @@ export function createGame(_args: {
       return
     }
 
+    const direction = pendingDirectionTicks > 0 ? pendingDirection : null
+
     state = tick({
       state,
       input: {
-        direction: pendingDirection,
+        direction,
       },
     })
-    pendingDirection = null
+
+    if (pendingDirectionTicks > 0) {
+      pendingDirectionTicks -= 1
+
+      if (pendingDirectionTicks === 0) {
+        pendingDirection = null
+      }
+    }
+
     renderCurrentState()
   }, TICK_INTERVAL_MS)
 

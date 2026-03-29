@@ -56,7 +56,7 @@ export function createInitialState(args: {
     isGameOver: false,
     boardWidth,
     boardHeight,
-    ticksPerDrop: 30,
+    ticksPerDrop: 18,
     tickCount: 0,
   }
 }

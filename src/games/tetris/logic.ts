@@ -355,5 +355,5 @@ function calculateLevel(args: { linesCleared: number }): number {
 function calculateTicksPerDrop(args: { level: number }): number {
   const { level } = args
 
-  return Math.max(5, 30 - (level - 1) * 2)
+  return Math.max(5, 18 - (level - 1) * 2)
 }
