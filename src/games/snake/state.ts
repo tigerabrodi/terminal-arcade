@@ -16,19 +16,55 @@ export interface SnakeInput {
   direction: Direction | null
 }
 
+function createInitialSnake(args: { gameArea: Dimensions }): Array<Position> {
+  const { gameArea } = args
+  const snakeLength = Math.max(1, Math.min(3, gameArea.width))
+  const centerY = Math.min(
+    Math.max(Math.floor(gameArea.height / 2), 0),
+    Math.max(gameArea.height - 1, 0)
+  )
+  const headX = Math.min(
+    Math.max(gameArea.width - 1, 0),
+    Math.max(snakeLength - 1, Math.floor(gameArea.width / 2))
+  )
+
+  return Array.from({ length: snakeLength }, (_value, index) => {
+    return {
+      x: headX - index,
+      y: centerY,
+    }
+  })
+}
+
+function createInitialFood(args: {
+  gameArea: Dimensions
+  snake: Array<Position>
+}): Position {
+  const { gameArea, snake } = args
+
+  for (let y = 0; y < gameArea.height; y += 1) {
+    for (let x = 0; x < gameArea.width; x += 1) {
+      const isOnSnake = snake.some((segment) => {
+        return segment.x === x && segment.y === y
+      })
+
+      if (!isOnSnake) {
+        return { x, y }
+      }
+    }
+  }
+
+  return snake[0] ?? { x: 0, y: 0 }
+}
+
 export function createInitialState(args: { gameArea: Dimensions }): SnakeState {
   const { gameArea } = args
-  const centerX = Math.floor(gameArea.width / 2)
-  const centerY = Math.floor(gameArea.height / 2)
+  const snake = createInitialSnake({ gameArea })
 
   return {
-    snake: [
-      { x: centerX, y: centerY },
-      { x: centerX - 1, y: centerY },
-      { x: centerX - 2, y: centerY },
-    ],
+    snake,
     direction: 'right',
-    food: { x: centerX + 5, y: centerY },
+    food: createInitialFood({ gameArea, snake }),
     score: 0,
     isGameOver: false,
     gameArea,

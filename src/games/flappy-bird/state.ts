@@ -18,9 +18,15 @@ export interface FlappyBirdState {
   score: number
   isGameOver: boolean
   gameArea: Dimensions
+  birdX: number
+  birdWidth: number
+  birdHeight: number
   tickCount: number
+  pipeWidth: number
   pipeSpawnInterval: number
   pipeSpeed: number
+  gapSize: number
+  gapMargin: number
   gravity: number
   flapStrength: number
 }
@@ -33,6 +39,8 @@ export function createInitialState(args: {
   gameArea: Dimensions
 }): FlappyBirdState {
   const { gameArea } = args
+  const birdX = Math.min(10, Math.max(3, Math.floor(gameArea.width / 4)))
+  const gapSize = Math.max(5, Math.min(8, Math.floor(gameArea.height / 4)))
 
   return {
     bird: {
@@ -43,9 +51,15 @@ export function createInitialState(args: {
     score: 0,
     isGameOver: false,
     gameArea,
+    birdX,
+    birdWidth: 1,
+    birdHeight: 1,
     tickCount: 0,
+    pipeWidth: 3,
     pipeSpawnInterval: 30,
     pipeSpeed: 1,
+    gapSize,
+    gapMargin: 2,
     gravity: 0.4,
     flapStrength: -2.5,
   }

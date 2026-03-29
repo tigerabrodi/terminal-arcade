@@ -26,6 +26,7 @@ export interface DinoState {
   scrollSpeed: number
   tickCount: number
   spawnCooldown: number
+  spawnSequenceIndex: number
   gravity: number
   jumpStrength: number
 }
@@ -54,6 +55,7 @@ export function createInitialState(args: { gameArea: Dimensions }): DinoState {
     scrollSpeed: 1,
     tickCount: 0,
     spawnCooldown: 0,
+    spawnSequenceIndex: 0,
     gravity: 0.6,
     jumpStrength: -3,
   }
