@@ -5,6 +5,7 @@ import {
   type KeyEvent,
 } from '@opentui/core'
 import { COLORS } from '../../shared/colors.js'
+import { playJumpSound } from '../../shared/sound.js'
 import { tick } from './logic.js'
 import { renderGame } from './render.js'
 import { createInitialState } from './state.js'
@@ -60,6 +61,7 @@ export function createGame(args: {
   const handleKeyPress = (key: KeyEvent) => {
     if (key.name === 'space') {
       hasPendingFlap = true
+      playJumpSound()
       return
     }
 

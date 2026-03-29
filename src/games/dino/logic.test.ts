@@ -152,12 +152,13 @@ describe('dino logic', () => {
     expect(fallingState.player.y).toBe(state.groundY)
   })
 
-  test('player cannot jump while already jumping', () => {
+  test('player can use a second jump while airborne', () => {
     const state = createTestState({
       player: {
         y: 10,
-        velocityY: -0.5,
+        velocityY: 1.4,
         isJumping: true,
+        jumpCount: 1,
       },
       spawnCooldown: 5,
     })
@@ -170,7 +171,34 @@ describe('dino logic', () => {
       },
     })
 
-    expect(nextState.player.velocityY).not.toBe(state.jumpStrength)
+    expect(nextState.player.velocityY).toBeLessThan(0)
+    expect(nextState.player.velocityY).toBe(state.jumpStrength + state.gravity)
+    expect(nextState.player.jumpCount).toBe(2)
+  })
+
+  test('player cannot jump a third time before landing', () => {
+    const state = createTestState({
+      player: {
+        y: 10,
+        velocityY: 0.8,
+        isJumping: true,
+        jumpCount: 2,
+      },
+      spawnCooldown: 5,
+    })
+
+    const nextState = tick({
+      state,
+      input: {
+        jump: true,
+        duck: false,
+      },
+    })
+
+    expect(nextState.player.velocityY).not.toBe(
+      state.jumpStrength + state.gravity
+    )
+    expect(nextState.player.jumpCount).toBe(2)
   })
 
   test('landing resets jumping state and vertical velocity', () => {
@@ -194,6 +222,7 @@ describe('dino logic', () => {
     expect(nextState.player.y).toBe(state.groundY)
     expect(nextState.player.velocityY).toBe(0)
     expect(nextState.player.isJumping).toBe(false)
+    expect(nextState.player.jumpCount).toBe(0)
   })
 
   test('ducking only works on the ground and changes the hitbox height', () => {

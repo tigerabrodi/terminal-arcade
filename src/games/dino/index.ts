@@ -4,11 +4,12 @@ import {
   type CliRenderer,
 } from '@opentui/core'
 import { COLORS } from '../../shared/colors.js'
+import { playJumpSound } from '../../shared/sound.js'
 import { tick } from './logic.js'
 import { renderDino } from './render.js'
 import { createInitialState } from './state.js'
 
-const TICK_INTERVAL_MS = 100
+const TICK_INTERVAL_MS = 80
 const DUCK_LATCH_TICKS = 2
 
 export function createGame(args: {
@@ -65,6 +66,7 @@ export function createGame(args: {
 
     if (key.name === 'space' || key.name === 'up') {
       hasPendingJump = true
+      playJumpSound()
     }
 
     if (key.name === 'down') {

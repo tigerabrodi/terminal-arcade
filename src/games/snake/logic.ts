@@ -1,5 +1,10 @@
 import type { Position } from '../../shared/types.js'
-import type { Direction, SnakeInput, SnakeState } from './state.js'
+import {
+  INITIAL_TICK_INTERVAL,
+  type Direction,
+  type SnakeInput,
+  type SnakeState,
+} from './state.js'
 
 export function isOppositeDirection(args: {
   current: Direction
@@ -79,7 +84,7 @@ function calculateTickInterval(args: { score: number }): number {
   const { score } = args
   const speedLevel = Math.floor(score / 5)
 
-  return Math.max(60, 150 - speedLevel * 10)
+  return Math.max(60, INITIAL_TICK_INTERVAL - speedLevel * 10)
 }
 
 export function checkCollision(args: {

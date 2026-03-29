@@ -7,6 +7,7 @@ export interface Player {
   velocityY: number
   isJumping: boolean
   isDucking: boolean
+  jumpCount: number
 }
 
 export interface Obstacle {
@@ -46,17 +47,18 @@ export function createInitialState(args: { gameArea: Dimensions }): DinoState {
       velocityY: 0,
       isJumping: false,
       isDucking: false,
+      jumpCount: 0,
     },
     obstacles: [],
     score: 0,
     isGameOver: false,
     gameArea,
     groundY,
-    scrollSpeed: 1,
+    scrollSpeed: 2,
     tickCount: 0,
     spawnCooldown: 0,
     spawnSequenceIndex: 0,
-    gravity: 0.6,
-    jumpStrength: -3,
+    gravity: 0.75,
+    jumpStrength: -3.8,
   }
 }

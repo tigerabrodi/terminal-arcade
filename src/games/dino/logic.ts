@@ -8,12 +8,13 @@ export interface Bounds {
 }
 
 export const PLAYER_X = 4
-export const PLAYER_WIDTH = 2
+export const PLAYER_WIDTH = 3
 export const PLAYER_STANDING_HEIGHT = 3
 export const PLAYER_DUCKING_HEIGHT = 2
-export const BASE_SCROLL_SPEED = 1
-export const SPAWN_COOLDOWN_TICKS = 18
+export const BASE_SCROLL_SPEED = 2
+export const SPAWN_COOLDOWN_TICKS = 12
 export const BIRD_TOP_OFFSET = 3
+export const MAX_JUMPS = 2
 
 const OBSTACLE_SEQUENCE: Array<Obstacle['kind']> = [
   'cactus-small',
@@ -33,10 +34,12 @@ export function tick(args: { state: DinoState; input: DinoInput }): DinoState {
     isDucking: input.duck,
     groundY: state.groundY,
   })
-  const isGrounded =
-    playerAfterDuck.y === state.groundY && playerAfterDuck.velocityY === 0
+  const canJump = canPlayerJump({
+    player: playerAfterDuck,
+    groundY: state.groundY,
+  })
   const playerAfterJump =
-    input.jump && isGrounded
+    input.jump && canJump
       ? applyJump({
           player: playerAfterDuck,
           jumpStrength: state.jumpStrength,
@@ -113,6 +116,7 @@ export function applyJump(args: {
     velocityY: jumpStrength,
     isJumping: true,
     isDucking: false,
+    jumpCount: player.jumpCount + 1,
   }
 }
 
@@ -130,6 +134,7 @@ export function applyGravity(args: {
       y: groundY,
       velocityY: 0,
       isJumping: false,
+      jumpCount: 0,
     }
   }
 
@@ -143,6 +148,7 @@ export function applyGravity(args: {
       y: groundY,
       velocityY: 0,
       isJumping: false,
+      jumpCount: 0,
     }
   }
 
@@ -294,6 +300,13 @@ function isObstacleVisible(args: { obstacle: Obstacle }): boolean {
   const { obstacle } = args
 
   return obstacle.x + obstacle.width > 0
+}
+
+function canPlayerJump(args: { player: Player; groundY: number }): boolean {
+  const { player, groundY } = args
+  const isGrounded = player.y === groundY && player.velocityY === 0
+
+  return isGrounded || player.jumpCount < MAX_JUMPS
 }
 
 function hasBoundsOverlap(args: {

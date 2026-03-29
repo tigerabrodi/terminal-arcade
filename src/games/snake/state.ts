@@ -2,6 +2,9 @@ import type { Position, Dimensions } from '../../shared/types.js'
 
 export type Direction = 'up' | 'down' | 'left' | 'right'
 
+export const INITIAL_SNAKE_LENGTH = 5
+export const INITIAL_TICK_INTERVAL = 100
+
 export interface SnakeState {
   snake: Array<Position>
   direction: Direction
@@ -18,7 +21,10 @@ export interface SnakeInput {
 
 function createInitialSnake(args: { gameArea: Dimensions }): Array<Position> {
   const { gameArea } = args
-  const snakeLength = Math.max(1, Math.min(3, gameArea.width))
+  const snakeLength = Math.max(
+    1,
+    Math.min(INITIAL_SNAKE_LENGTH, gameArea.width)
+  )
   const centerY = Math.min(
     Math.max(Math.floor(gameArea.height / 2), 0),
     Math.max(gameArea.height - 1, 0)
@@ -68,6 +74,6 @@ export function createInitialState(args: { gameArea: Dimensions }): SnakeState {
     score: 0,
     isGameOver: false,
     gameArea,
-    tickInterval: 150,
+    tickInterval: INITIAL_TICK_INTERVAL,
   }
 }

@@ -11,8 +11,8 @@ const SCORE_COLOR = parseColor(COLORS.accent)
 const TEXT_COLOR = parseColor(COLORS.text)
 const DANGER_COLOR = parseColor(COLORS.danger)
 
-const PLAYER_STANDING_SPRITE = ['00', '[]', '^^']
-const PLAYER_DUCKING_SPRITE = ['00', '==']
+const PLAYER_STANDING_SPRITE = ['0)>', '/|\\', '/ >']
+const PLAYER_DUCKING_SPRITE = ['0)>', '/_>']
 const CACTUS_SMALL_SPRITE = ['|', '|']
 const CACTUS_LARGE_SPRITE = ['||', '||', '||']
 const BIRD_SPRITE = ['~~', '<>']

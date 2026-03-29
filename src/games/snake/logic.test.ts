@@ -419,7 +419,7 @@ describe('snake logic collisions and speed', () => {
     })
 
     expect(nextState.score).toBe(5)
-    expect(nextState.tickInterval).toBe(140)
+    expect(nextState.tickInterval).toBe(90)
   })
 
   test('game over freezes the snake on later ticks', () => {
@@ -456,6 +456,22 @@ describe('snake logic collisions and speed', () => {
     expect(state.food.y).toBeGreaterThanOrEqual(0)
     expect(state.food.y).toBeLessThan(state.gameArea.height)
     expect(state.snake).not.toContainEqual(state.food)
+  })
+
+  test('createInitialState starts with a longer snake on a normal board', () => {
+    const state = createInitialState({
+      gameArea: { width: 12, height: 12 },
+    })
+
+    expect(state.snake).toHaveLength(5)
+  })
+
+  test('createInitialState uses a faster starting tick interval', () => {
+    const state = createInitialState({
+      gameArea: { width: 12, height: 12 },
+    })
+
+    expect(state.tickInterval).toBe(100)
   })
 
   test('eating the final free cell ends the run when no new food cell remains', () => {
