@@ -1,0 +1,46 @@
+{
+  "name": "terminal-arcade",
+  "version": "0.1.0",
+  "description": "Retro arcade games in your terminal. Split your terminal, play while you work.",
+  "type": "module",
+  "bin": {
+    "terminal-arcade": "./src/index.ts"
+  },
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "test": "bun test",
+    "tsc": "bunx tsc --noEmit",
+    "lint": "bunx eslint .",
+    "format": "bunx prettier --write ."
+  },
+  "dependencies": {
+    "@opentui/core": "latest"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/bun": "latest",
+    "eslint": "^9.0.0",
+    "globals": "^16.0.0",
+    "jiti": "^2.6.1",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.0.0"
+  },
+  "keywords": [
+    "terminal",
+    "arcade",
+    "games",
+    "tui",
+    "cli",
+    "snake",
+    "flappy-bird",
+    "dino",
+    "opentui",
+    "bun"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tigerabrodi/terminal-arcade"
+  }
+}
