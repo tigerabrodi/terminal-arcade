@@ -62,6 +62,7 @@ describe('flappy bird logic', () => {
       input: {
         flap: true,
       },
+      randomValue: 0,
     })
 
     expect(state.bird.velocity).toBeCloseTo(-2.1)
@@ -151,6 +152,7 @@ describe('flappy bird logic', () => {
       input: {
         flap: false,
       },
+      randomValue: 0,
     })
 
     expect(state.pipes).toEqual([

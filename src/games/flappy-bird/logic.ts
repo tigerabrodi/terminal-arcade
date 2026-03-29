@@ -111,7 +111,7 @@ export function checkCollision(args: {
 export function tick(args: {
   state: FlappyBirdState
   input: FlappyBirdInput
-  randomValue?: number
+  randomValue: number
 }): FlappyBirdState {
   const { state, input, randomValue } = args
 
@@ -142,7 +142,7 @@ export function tick(args: {
           gameArea: state.gameArea,
           gapMargin: state.gapMargin,
           gapSize: state.gapSize,
-          randomValue: randomValue ?? Math.random(),
+          randomValue,
         }),
       ]
     : movedPipes

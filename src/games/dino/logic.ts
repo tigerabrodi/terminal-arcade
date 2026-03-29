@@ -192,11 +192,11 @@ export function spawnObstacle(args: {
   groundY: number
   spawnSequenceIndex: number
 }): Obstacle {
-  const { gameArea, groundY, spawnSequenceIndex } = args
+  const { gameArea, spawnSequenceIndex } = args
   const kind =
     OBSTACLE_SEQUENCE[spawnSequenceIndex % OBSTACLE_SEQUENCE.length] ??
     'cactus-small'
-  const spawnX = gameArea.width + Math.max(0, groundY - groundY)
+  const spawnX = gameArea.width
 
   switch (kind) {
     case 'cactus-small':
