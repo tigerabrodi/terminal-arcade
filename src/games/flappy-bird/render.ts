@@ -64,12 +64,36 @@ function drawBird(args: {
   const { buffer, state } = args
   const x = state.birdX
   const y = 2 + Math.round(state.bird.y)
+  const isWingRaised = state.tickCount % 6 < 3
+  const wingY = isWingRaised ? y - 1 : y + 1
+  const wingChar = isWingRaised ? '^' : 'v'
 
   drawCell({
     buffer,
     x,
     y,
-    char: '@',
+    char: 'o',
+    fg: birdColor,
+  })
+  drawCell({
+    buffer,
+    x: x - 1,
+    y,
+    char: '~',
+    fg: birdColor,
+  })
+  drawCell({
+    buffer,
+    x: x + 1,
+    y,
+    char: '>',
+    fg: birdColor,
+  })
+  drawCell({
+    buffer,
+    x,
+    y: wingY,
+    char: wingChar,
     fg: birdColor,
   })
 }
