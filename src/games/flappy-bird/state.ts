@@ -60,7 +60,7 @@ export function createInitialState(args: {
     pipeSpeed: 1,
     gapSize,
     gapMargin: 2,
-    gravity: 0.4,
-    flapStrength: -2.5,
+    gravity: 0.3,
+    flapStrength: -2,
   }
 }

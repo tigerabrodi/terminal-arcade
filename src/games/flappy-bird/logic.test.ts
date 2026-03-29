@@ -65,8 +65,8 @@ describe('flappy bird logic', () => {
       randomValue: 0,
     })
 
-    expect(state.bird.velocity).toBeCloseTo(-2.1)
-    expect(state.bird.y).toBeCloseTo(6.9)
+    expect(state.bird.velocity).toBeCloseTo(-1.7)
+    expect(state.bird.y).toBeCloseTo(7.3)
     expect(state.tickCount).toBe(1)
   })
 
