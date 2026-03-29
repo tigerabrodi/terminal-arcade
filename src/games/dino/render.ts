@@ -104,7 +104,7 @@ function drawScore(args: { buffer: OptimizedBuffer; state: DinoState }): void {
   const scoreText = `SCORE ${state.score}`
   const scoreX = Math.max(0, state.gameArea.width - scoreText.length - 1)
 
-  buffer.drawText(scoreText, scoreX, 1, SCORE_COLOR)
+  buffer.drawText(scoreText, scoreX, 2, SCORE_COLOR)
 }
 
 function drawGameOverOverlay(args: {

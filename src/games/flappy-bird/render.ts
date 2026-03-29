@@ -54,7 +54,7 @@ function drawScore(args: { buffer: OptimizedBuffer; score: number }): void {
   const text = `Score ${score}`
   const x = Math.max(0, Math.floor((buffer.width - text.length) / 2))
 
-  buffer.drawText(text, x, 0, scoreColor, backgroundColor)
+  buffer.drawText(text, x, 1, scoreColor, backgroundColor)
 }
 
 function drawBird(args: {
@@ -63,7 +63,7 @@ function drawBird(args: {
 }): void {
   const { buffer, state } = args
   const x = state.birdX
-  const y = 1 + Math.round(state.bird.y)
+  const y = 2 + Math.round(state.bird.y)
 
   drawCell({
     buffer,
@@ -88,7 +88,7 @@ function drawPipes(args: {
         drawCell({
           buffer,
           x: pipeX,
-          y: 1 + playfieldY,
+          y: 2 + playfieldY,
           char: '|',
           fg: pipeColor,
         })
@@ -102,7 +102,7 @@ function drawPipes(args: {
         drawCell({
           buffer,
           x: pipeX,
-          y: 1 + playfieldY,
+          y: 2 + playfieldY,
           char: '|',
           fg: pipeColor,
         })
@@ -116,7 +116,7 @@ function drawGround(args: {
   state: FlappyBirdState
 }): void {
   const { buffer, state } = args
-  const groundY = state.gameArea.height + 1
+  const groundY = state.gameArea.height + 2
 
   for (let x = 0; x < buffer.width; x += 1) {
     const char = (x + state.tickCount) % 2 === 0 ? '=' : '-'
